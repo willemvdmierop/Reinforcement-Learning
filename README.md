@@ -33,5 +33,5 @@ Next the performance of the rainbows is compared to A3C.
 We can now show the difference in performance between the dum agent and the smart agent. 
 
 ![](Lunar_Lander/Lander_Gifs/Lunar_Lander_dum.gif)
-![](Lunar_Lander/Lander_Gifs/Lunar_Lander_4000.gif)
+![](Lunar_Lander/Lander_Gifs/Lunar_Lander_4000_new.gif)
 
