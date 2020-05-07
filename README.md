@@ -19,4 +19,4 @@ architectures implemented (Lunar_Lander/Different_DQN_Networks):
 - Prioritized Experience Replay DQN
 - Multi-step DQN
 
-<img src="Lunar_Lander/Different_DQN_Networks/Graphs/PER_DQN.png" width="420"/>
+<img src="Lunar_Lander/Different_DQN_Networks/Graphs/PER_DQN.png" width="900"/>
