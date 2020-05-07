@@ -1,0 +1,7 @@
+setup.py
+custom_env_dir.egg-info/Icon
+custom_env_dir.egg-info/PKG-INFO
+custom_env_dir.egg-info/SOURCES.txt
+custom_env_dir.egg-info/dependency_links.txt
+custom_env_dir.egg-info/requires.txt
+custom_env_dir.egg-info/top_level.txt
