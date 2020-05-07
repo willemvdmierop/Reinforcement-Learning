@@ -19,4 +19,12 @@ architectures implemented (Lunar_Lander/Different_DQN_Networks):
 - Prioritized Experience Replay DQN
 - Multi-step DQN
 
-<img src="Lunar_Lander/Different_DQN_Networks/Graphs/PER_DQN.png" width="900"/>
+<img src="Lunar_Lander/Different_DQN_Networks/Graphs/Multi_DQN.png" width="900"/>
+
+The graph shows that the multi-step DQN performs best so the rainbow methods are compared to multi-step. 
+
+<img src="Lunar_Lander/Rainbow_Lunar/Graph/Rainbow_Graph.png" width="900"/>
+
+Next the performance of the rainbows is compared to A3C.
+
+<img src="Lunar_Lander/A3C_Lunar/A3C_vs_the_best.png" width="900"/>
