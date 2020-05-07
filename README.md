@@ -28,3 +28,10 @@ The graph shows that the multi-step DQN performs best so the rainbow methods are
 Next the performance of the rainbows is compared to A3C.
 
 <img src="Lunar_Lander/A3C_Lunar/A3C_vs_the_best.png" width="900"/>
+
+
+We can now show the difference in performance between the dum agent and the smart agent. 
+
+![](Lunar_Lander/Lander_Gifs/Lunar_Lander_dum.gif)
+![](Lunar_Lander/Lander_Gifs/Lander_Dueling_PER_4000.gif)
+
