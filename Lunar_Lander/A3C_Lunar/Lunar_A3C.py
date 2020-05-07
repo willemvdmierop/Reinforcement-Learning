@@ -29,7 +29,7 @@ def ensure_shared_grads(model, shared_model):
             return
         shared_param._grad = param.grad
 
-
+# =================================================== Train ======================================================
 def train(rank, shared_model, counter, lock, optimizer=None, num_steps=20, env_name="LunarLander-v2",
           lr=0.0001, max_episode_length=1000000, gamma=0.99, GAE_lambda=1,
           entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=50):
@@ -122,6 +122,7 @@ def train(rank, shared_model, counter, lock, optimizer=None, num_steps=20, env_n
 
         ensure_shared_grads(model, shared_model)
         optimizer.step()
+        # ======================================== Termination of mp ============================================
         if Finish.value == 1:
             scores = np.array(scores)
             lengthlist = np.array(lengths)
@@ -132,7 +133,7 @@ def train(rank, shared_model, counter, lock, optimizer=None, num_steps=20, env_n
             print("terminating the multiprocess")
             break
 
-
+# =================================================== Test ======================================================
 def test(rank, shared_model, counter, env_name="LunarLander-v2", max_episode_length=1000000):
     torch.manual_seed(seed + rank)
     env = gym.make(env_name)
@@ -188,7 +189,7 @@ def test(rank, shared_model, counter, env_name="LunarLander-v2", max_episode_len
                                   time.gmtime(time.time() - start_time)),
                     counter.value, counter.value / (time.time() - start_time),
                     reward_sum, episode_length), end = "")
-
+            # ======================================== Termination of mp ============================================
             if np.mean(scores_window) > 200:
                 scores = np.array(scores)
                 lengthlist = np.array(lengths)
@@ -208,6 +209,7 @@ def test(rank, shared_model, counter, env_name="LunarLander-v2", max_episode_len
 
 
 # =========================================== let's train the A3C model ================================================
+
 # https://pytorch.org/docs/stable/notes/multiprocessing.html
 if __name__ == '__main__':
     seed = 1
@@ -220,6 +222,7 @@ if __name__ == '__main__':
     lr = 0.001  ##
     num_steps = 40 ## Number of forward steps in A3C
     #############
+    # ======================================== training with mp ============================================
     num_processes = os.cpu_count() - 2
     print(f'we are using {num_processes} number of processes.\n')
     shared_model = Lunar_A3C_model.ActorCritic(state_size=env.observation_space.shape[0], action_size=env.action_space.n,

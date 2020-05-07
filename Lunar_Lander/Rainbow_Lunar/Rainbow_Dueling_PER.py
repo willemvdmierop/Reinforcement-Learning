@@ -119,7 +119,7 @@ class ReplayMemory(object):
         return len(self.memory)
 
 
-# new 07
+# ============================================= Dueling network =====================================================
 class DDQN(nn.Module):
 
     def __init__(self, state_size, action_size, seed, fc1_size=64, fc2_size=64):
@@ -150,7 +150,7 @@ class DDQN(nn.Module):
         action = val + adv - adv.mean(1).unsqueeze(1).expand(state.size(0), self.num_actions)
         return action
 
-
+# =================================================== Lunar agent ====================================================
 class Lunar_agent:
     def __init__(self, state_size, action_size, seed, batch_size=64, gamma=0.99, learning_rate=1e-4,
                  capacity=int(1e5), update_every=4, tau=1e-3, beta=0.4, ):
@@ -246,7 +246,7 @@ class Lunar_agent:
 
 
 print(30 * '#' + ' Training the agent with Q learning ' + 30 * '#')
-
+# =================================================== Training ======================================================
 lunar_agent = Lunar_agent(state_size=env.observation_space.shape[0], action_size=4, seed=0)
 
 

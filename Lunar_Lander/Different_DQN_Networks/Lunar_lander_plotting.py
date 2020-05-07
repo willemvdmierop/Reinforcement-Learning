@@ -36,6 +36,125 @@ rcParams['figure.figsize'] = 15, 9
 env = gym.make("LunarLander-v2")
 env.seed(0)
 
+# ================================= This first part creates the plots ==================================
+
+DQN_on = True
+Double_on = True
+Dueling_on = True
+Noisy_on = True
+PER_on = True
+Multi_on = True
+Rainbow_one = False
+Rainbow_two = False
+
+A3C_ON = False
+
+path_scores = "/Users/willemvandemierop/Documents/Master AI/Pycharm/DL Optimization/Lunar_latest_code_21st_april/scores/"
+
+######################## scores plot #########################
+df = pd.read_csv(path_scores + "scores_DQN_3890_episodes.csv")
+df2 = pd.read_csv(path_scores + "scores_DQN_Double_camb.csv")
+df3 = pd.read_csv(path_scores + "scores_DQN_Dueling.csv")
+df4 = pd.read_csv(path_scores + "scores_Noisy_correct.csv")
+df5 = pd.read_csv(path_scores +  "scores_Original_DQN_PER.csv")
+df6 = pd.read_csv(path_scores + "scores_3N_step_22_V1.csv")
+
+
+fig, ax = plt.subplots(1,2,figsize = (14,5))
+window = 50
+print("last value DQN",df.iloc[-1])
+print("last value double DQN",df2.iloc[-1])
+rolling_mean = pd.Series(df['Scores']).rolling(window).mean()
+std = pd.Series(df['Scores']).rolling(window).std()
+rolling_mean2 = pd.Series(df2['Scores']).rolling(window).mean()
+std2 = pd.Series(df2['Scores']).rolling(window).std()
+rolling_mean3 = pd.Series(df3['Scores']).rolling(window).mean()
+std3 = pd.Series(df3['Scores']).rolling(window).std()
+rolling_mean4 = pd.Series(df4['Scores']).rolling(window).mean()
+std4 = pd.Series(df4['Scores']).rolling(window).std()
+rolling_mean5 = pd.Series(df5['Scores']).rolling(window).mean()
+std5 = pd.Series(df5['Scores']).rolling(window).std()
+rolling_mean6 = pd.Series(df6['Scores']).rolling(window).mean()
+std6 = pd.Series(df6['Scores']).rolling(window).std()
+
+if DQN_on:
+    ax[0].plot(rolling_mean, label = 'DQN')
+    ax[0].fill_between(range(len(pd.Series(df['Scores']))), rolling_mean - std, rolling_mean + std, color = 'blue', alpha = 0.1)
+if Double_on:
+    ax[0].plot(rolling_mean2, label = 'Double DQN')
+    ax[0].fill_between(range(len(pd.Series(df2['Scores']))), rolling_mean2 - std2, rolling_mean2 + std2, color='orange',
+                       alpha=0.1)
+if Dueling_on:
+    ax[0].plot(rolling_mean3, label = 'Dueling DQN')
+    ax[0].fill_between(range(len(pd.Series(df3['Scores']))), rolling_mean3 - std3, rolling_mean3 + std3, color = 'green', alpha = 0.1)
+
+if Noisy_on:
+    ax[0].plot(rolling_mean4, label = 'Noisy DQN', color = 'red')
+    ax[0].fill_between(range(len(pd.Series(df4['Scores']))), rolling_mean4 - std4, rolling_mean4 + std4, color='red',
+                       alpha=0.1)
+if PER_on:
+    ax[0].plot(rolling_mean5, label = 'DQN PER', color = 'purple')
+    ax[0].fill_between(range(len(pd.Series(df5['Scores']))), rolling_mean5 - std5, rolling_mean5 + std5, color='purple',
+                       alpha=0.1)
+if Multi_on:
+    ax[0].plot(rolling_mean6, label = 'DQN Multi step', color = 'magenta')
+    ax[0].fill_between(range(len(pd.Series(df6['Scores']))), rolling_mean6 - std6, rolling_mean6 + std6, color = 'magenta', alpha = 0.1)
+
+ax[0].set_title('Scores moving average ({}-episode window)'.format(window))
+ax[0].set_xlabel("Episode")
+ax[0].set_ylabel("Score")
+ax[0].legend(loc = 'lower right')
+
+
+######################## Episode length plot ###############
+rolling_mean_length = pd.Series(df['Episode length']).rolling(window).mean()
+std_length = pd.Series(df['Episode length']).rolling(window).std()
+rolling_mean_length2 = pd.Series(df2['Episode length']).rolling(window).mean()
+std_length2 = pd.Series(df2['Episode length']).rolling(window).std()
+rolling_mean_length3 = pd.Series(df3['Episode length']).rolling(window).mean()
+std_length3 = pd.Series(df3['Episode length']).rolling(window).std()
+rolling_mean_length4 = pd.Series(df4['Episode length']).rolling(window).mean()
+std_length4 = pd.Series(df4['Episode length']).rolling(window).std()
+rolling_mean_length5 = pd.Series(df5['Episode length']).rolling(window).mean()
+std_length5 = pd.Series(df5['Episode length']).rolling(window).std()
+rolling_mean_length6 = pd.Series(df6['Episode length']).rolling(window).mean()
+std_length6 = pd.Series(df6['Episode length']).rolling(window).std()
+
+
+if DQN_on:
+    ax[1].plot(rolling_mean_length, label = 'DQN')
+    ax[1].fill_between(range(len(pd.Series(df['Episode length']))), rolling_mean_length - std, rolling_mean_length + std, color = 'blue', alpha = 0.1)
+
+if Double_on:
+    ax[1].plot(rolling_mean_length2, label = 'Double DQN')
+    ax[1].fill_between(range(len(pd.Series(df2['Episode length']))), rolling_mean_length2 - std2, rolling_mean_length2 + std2, color='orange',
+                       alpha=0.1)
+if Dueling_on:
+    ax[1].plot(rolling_mean_length3, label = 'Dueling DQN')
+    ax[1].fill_between(range(len(pd.Series(df3['Episode length']))), rolling_mean_length3 - std3, rolling_mean_length3 + std3, color = 'green', alpha = 0.1)
+
+if Noisy_on:
+    ax[1].plot(rolling_mean_length4, label = 'Noisy DQN', color = 'red')
+    ax[1].fill_between(range(len(pd.Series(df4['Episode length']))), rolling_mean_length4 - std4, rolling_mean_length4 + std4, color='red',
+                       alpha=0.1)
+if PER_on:
+    ax[1].plot(rolling_mean_length5, label = 'DQN PER', color = 'purple')
+    ax[1].fill_between(range(len(pd.Series(df5['Episode length']))), rolling_mean_length5 - std5, rolling_mean_length5 + std5, color='purple',
+                       alpha=0.1)
+if Multi_on:
+    ax[1].plot(rolling_mean_length6, label = 'DQN Multi step', color = 'magenta')
+    ax[1].fill_between(range(len(pd.Series(df6['Episode length']))), rolling_mean_length6 - std6, rolling_mean_length6 + std6, color = 'magenta', alpha = 0.1)
+
+ax[1].set_title('Episode Length moving average ({}-episode window)'.format(window))
+ax[1].set_xlabel("Episode")
+ax[1].set_ylabel("Episode Length")
+ax[1].legend(loc = 'lower right')
+fig.subplots_adjust(hspace=1)
+plt.show()
+
+# ================================= This second part creates the gifs ==================================
+
+
 # Experience replay memory for training our DQN. stores the transitions that the agent observes
 class ReplayMemory(object):
 
@@ -164,119 +283,6 @@ class Lunar_agent:
         self.soft_update(policy_net=self.policy_net, target_net=self.target_net, tau=self.tau)
 
 
-DQN_on = True
-Double_on = True
-Dueling_on = True
-Noisy_on = True
-PER_on = True
-Multi_on = True
-Rainbow_one = False
-Rainbow_two = False
-
-A3C_ON = False
-
-path_scores = "/Users/willemvandemierop/Documents/Master AI/Pycharm/DL Optimization/Lunar_latest_code_21st_april/scores/"
-
-######################## scores plot #########################
-df = pd.read_csv(path_scores + "scores_DQN_3890_episodes.csv")
-df2 = pd.read_csv(path_scores + "scores_DQN_Double_camb.csv")
-df3 = pd.read_csv(path_scores + "scores_DQN_Dueling.csv")
-df4 = pd.read_csv(path_scores + "scores_Noisy_correct.csv")
-df5 = pd.read_csv(path_scores +  "scores_Original_DQN_PER.csv")
-df6 = pd.read_csv(path_scores + "scores_3N_step_22_V1.csv")
-
-
-fig, ax = plt.subplots(1,2,figsize = (14,5))
-window = 50
-print("last value DQN",df.iloc[-1])
-print("last value double DQN",df2.iloc[-1])
-rolling_mean = pd.Series(df['Scores']).rolling(window).mean()
-std = pd.Series(df['Scores']).rolling(window).std()
-rolling_mean2 = pd.Series(df2['Scores']).rolling(window).mean()
-std2 = pd.Series(df2['Scores']).rolling(window).std()
-rolling_mean3 = pd.Series(df3['Scores']).rolling(window).mean()
-std3 = pd.Series(df3['Scores']).rolling(window).std()
-rolling_mean4 = pd.Series(df4['Scores']).rolling(window).mean()
-std4 = pd.Series(df4['Scores']).rolling(window).std()
-rolling_mean5 = pd.Series(df5['Scores']).rolling(window).mean()
-std5 = pd.Series(df5['Scores']).rolling(window).std()
-rolling_mean6 = pd.Series(df6['Scores']).rolling(window).mean()
-std6 = pd.Series(df6['Scores']).rolling(window).std()
-
-if DQN_on:
-    ax[0].plot(rolling_mean, label = 'DQN')
-    ax[0].fill_between(range(len(pd.Series(df['Scores']))), rolling_mean - std, rolling_mean + std, color = 'blue', alpha = 0.1)
-if Double_on:
-    ax[0].plot(rolling_mean2, label = 'Double DQN')
-    ax[0].fill_between(range(len(pd.Series(df2['Scores']))), rolling_mean2 - std2, rolling_mean2 + std2, color='orange',
-                       alpha=0.1)
-if Dueling_on:
-    ax[0].plot(rolling_mean3, label = 'Dueling DQN')
-    ax[0].fill_between(range(len(pd.Series(df3['Scores']))), rolling_mean3 - std3, rolling_mean3 + std3, color = 'green', alpha = 0.1)
-
-if Noisy_on:
-    ax[0].plot(rolling_mean4, label = 'Noisy DQN', color = 'red')
-    ax[0].fill_between(range(len(pd.Series(df4['Scores']))), rolling_mean4 - std4, rolling_mean4 + std4, color='red',
-                       alpha=0.1)
-if PER_on:
-    ax[0].plot(rolling_mean5, label = 'DQN PER', color = 'purple')
-    ax[0].fill_between(range(len(pd.Series(df5['Scores']))), rolling_mean5 - std5, rolling_mean5 + std5, color='purple',
-                       alpha=0.1)
-if Multi_on:
-    ax[0].plot(rolling_mean6, label = 'DQN Multi step', color = 'magenta')
-    ax[0].fill_between(range(len(pd.Series(df6['Scores']))), rolling_mean6 - std6, rolling_mean6 + std6, color = 'magenta', alpha = 0.1)
-
-ax[0].set_title('Scores moving average ({}-episode window)'.format(window))
-ax[0].set_xlabel("Episode")
-ax[0].set_ylabel("Score")
-ax[0].legend(loc = 'lower right')
-
-
-######################## Episode length plot ###############
-rolling_mean_length = pd.Series(df['Episode length']).rolling(window).mean()
-std_length = pd.Series(df['Episode length']).rolling(window).std()
-rolling_mean_length2 = pd.Series(df2['Episode length']).rolling(window).mean()
-std_length2 = pd.Series(df2['Episode length']).rolling(window).std()
-rolling_mean_length3 = pd.Series(df3['Episode length']).rolling(window).mean()
-std_length3 = pd.Series(df3['Episode length']).rolling(window).std()
-rolling_mean_length4 = pd.Series(df4['Episode length']).rolling(window).mean()
-std_length4 = pd.Series(df4['Episode length']).rolling(window).std()
-rolling_mean_length5 = pd.Series(df5['Episode length']).rolling(window).mean()
-std_length5 = pd.Series(df5['Episode length']).rolling(window).std()
-rolling_mean_length6 = pd.Series(df6['Episode length']).rolling(window).mean()
-std_length6 = pd.Series(df6['Episode length']).rolling(window).std()
-
-
-if DQN_on:
-    ax[1].plot(rolling_mean_length, label = 'DQN')
-    ax[1].fill_between(range(len(pd.Series(df['Episode length']))), rolling_mean_length - std, rolling_mean_length + std, color = 'blue', alpha = 0.1)
-
-if Double_on:
-    ax[1].plot(rolling_mean_length2, label = 'Double DQN')
-    ax[1].fill_between(range(len(pd.Series(df2['Episode length']))), rolling_mean_length2 - std2, rolling_mean_length2 + std2, color='orange',
-                       alpha=0.1)
-if Dueling_on:
-    ax[1].plot(rolling_mean_length3, label = 'Dueling DQN')
-    ax[1].fill_between(range(len(pd.Series(df3['Episode length']))), rolling_mean_length3 - std3, rolling_mean_length3 + std3, color = 'green', alpha = 0.1)
-
-if Noisy_on:
-    ax[1].plot(rolling_mean_length4, label = 'Noisy DQN', color = 'red')
-    ax[1].fill_between(range(len(pd.Series(df4['Episode length']))), rolling_mean_length4 - std4, rolling_mean_length4 + std4, color='red',
-                       alpha=0.1)
-if PER_on:
-    ax[1].plot(rolling_mean_length5, label = 'DQN PER', color = 'purple')
-    ax[1].fill_between(range(len(pd.Series(df5['Episode length']))), rolling_mean_length5 - std5, rolling_mean_length5 + std5, color='purple',
-                       alpha=0.1)
-if Multi_on:
-    ax[1].plot(rolling_mean_length6, label = 'DQN Multi step', color = 'magenta')
-    ax[1].fill_between(range(len(pd.Series(df6['Episode length']))), rolling_mean_length6 - std6, rolling_mean_length6 + std6, color = 'magenta', alpha = 0.1)
-
-ax[1].set_title('Episode Length moving average ({}-episode window)'.format(window))
-ax[1].set_xlabel("Episode")
-ax[1].set_ylabel("Episode Length")
-ax[1].legend(loc = 'lower right')
-fig.subplots_adjust(hspace=1)
-plt.show()
 
 
 
@@ -285,7 +291,7 @@ device = 'cpu'
 lunar_agent_smart = Lunar_agent(state_size=env.observation_space.shape[0], action_size=4, seed=0)
 lunar_agent_smart.policy_net.load_state_dict(torch.load('checkpoint_lunar_agent_5000.pth', map_location='cpu'))
 
-'''
+
 state = env.reset()
 tot_rew = 0
 done = False
@@ -331,4 +337,3 @@ ani.save('Lunar_Lander.gif', writer=animation.PillowWriter(fps=20))
 
 env.close()
 
-'''

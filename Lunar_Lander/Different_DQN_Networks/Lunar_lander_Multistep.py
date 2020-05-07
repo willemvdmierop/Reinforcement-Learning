@@ -50,7 +50,7 @@ print('Episode ended with a reward {}, in state {}'.format(reward, state))
 
 # Experience replay memory for training our DQN. stores the transitions that the agent observes
 
-
+# ===================================== Multi step buffer ===============================================
 class N_Step_Replay_Buffer(object):
 
     def __init__(self, action_size, capacity, batch_size, seed, n_step=3, gamma=0.99):
@@ -118,7 +118,7 @@ class DQN(nn.Module):
         action = self.out(x)
         return action
 
-
+# =================================================== Lunar agent ======================================================
 class Lunar_agent:
     def __init__(self, state_size, action_size, seed, batch_size=64, gamma=0.99, learning_rate=1e-4,
                  capacity=int(1e5), update_every=4, tau=1e-3, n_step=3):
@@ -206,7 +206,7 @@ class Lunar_agent:
 
 
 print(30 * '#' + ' Training the agent with Q learning ' + 30 * '#')
-
+# ============================================ Training ====================================================
 lunar_agent = Lunar_agent(state_size=env.observation_space.shape[0], action_size=4, seed=0, n_step=3, gamma = 0.99)
 
 

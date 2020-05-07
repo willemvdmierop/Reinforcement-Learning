@@ -35,7 +35,9 @@ rcParams['figure.figsize'] = 15, 9
 device = 'cpu'
 env = gym.make("LunarLander-v2")
 env.seed(0)
-'''
+
+# ================================= This first part creates the plots ==================================
+
 Multi_step_on = True
 Dueling_Noisy_on = True
 Dueling_PER_on = True
@@ -188,7 +190,9 @@ ax[1].set_ylabel("Episode Length")
 ax[1].legend(loc = 'lower right')
 fig.subplots_adjust(hspace=1)
 plt.show()
-'''
+
+
+# ================================= This second part creates the gifs ==================================
 # Experience replay memory for training our DQN. stores the transitions that the agent observes
 class ReplayMemory(object):
 

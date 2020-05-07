@@ -145,7 +145,7 @@ class ReplayMemory(object):
     def __len__(self):
         return len(self.memory)
 
-
+# ========================================= Noisy Linear layer class ===============================================
 class NoisyLinear(nn.Module):
     def __init__(self, in_features, out_features, std_init=0.4):
         super(NoisyLinear, self).__init__()
@@ -190,7 +190,7 @@ class NoisyLinear(nn.Module):
 
 
 # our Noisy Network
-
+# ===================================== Noisy Dueling network =====================================================
 class Noisy_Dueling_DQN(nn.Module):
 
     def __init__(self, state_size, action_size, seed, fc1_size=128, fc2_size=64):
@@ -228,8 +228,8 @@ class Noisy_Dueling_DQN(nn.Module):
         self.value_N2.reset_noise()
         self.advan_N1.reset_noise()
         self.advan_N2.reset_noise()
-
-
+        
+# =================================================== Lunar agent ====================================================
 class Lunar_agent:
     def __init__(self, state_size, action_size, seed, batch_size=64, gamma=0.99, learning_rate=1e-4,
                  capacity=int(1e5), update_every=4, tau=1e-3, pretrained=False):
@@ -332,7 +332,7 @@ print(30 * '#' + ' Training the agent with Q learning ' + 30 * '#')
 
 lunar_agent = Lunar_agent(state_size=env.observation_space.shape[0], action_size=4, seed=0)
 
-
+# =================================================== Training ======================================================
 def train(n_episodes=2000, max_t=1000, eps_start=1.0, eps_end=0.01, eps_decay=0.9995):
     """Deep Q Learning
     :param

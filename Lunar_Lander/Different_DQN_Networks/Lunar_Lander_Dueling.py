@@ -171,21 +171,6 @@ class Lunar_agent:
         for target_param, policy_param in zip(self.target_net.parameters(), self.policy_net.parameters()):
             target_param.data.copy_(tau * policy_param.data + (1.0 - tau) * target_param.data)
 
-    def train_DQN(self, experiences, gamma):
-        states, actions, rewards, next_states, dones = experiences
-        # we need the max predicted Q values for next states from our target model
-        Q_targets_net = self.target_net(next_states).detach().max(1)[0].unsqueeze(1)
-        # Compute the expected Q values
-        Q_targets = rewards + (gamma * Q_targets_net * (1 - dones))  # done = 0 for False and 1 True
-        # Q from policy
-        Q_expected = self.policy_net(states).gather(1, (actions.type(torch.LongTensor)))
-        loss = F.mse_loss(Q_expected, Q_targets)
-        self.optimizer.zero_grad()
-        loss.backward()
-        self.optimizer.step()
-        # ------------------------- update target network ---------------------------------- #
-        self.soft_update(policy_net=self.policy_net, target_net=self.target_net, tau=self.tau)
-
     def train_DDQN(self, experiences, gamma):
         states, actions, rewards, next_states, dones = experiences
         Q_argmx = self.policy_net(next_states).detach()
@@ -209,7 +194,7 @@ class Lunar_agent:
 
 
 print(30 * '#' + ' Training the agent with Q learning ' + 30 * '#')
-
+# ============================================ Training ====================================================
 lunar_agent = Lunar_agent(state_size=env.observation_space.shape[0], action_size=4, seed=0)
 
 

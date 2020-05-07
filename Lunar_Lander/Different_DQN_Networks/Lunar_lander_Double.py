@@ -182,7 +182,7 @@ class Lunar_agent:
 
 
 print(30 * '#' + ' Training the agent with Q learning ' + 30 * '#')
-
+# ============================================ Training ====================================================
 lunar_agent = Lunar_agent(state_size=env.observation_space.shape[0], action_size=4, seed=0)
 
 
