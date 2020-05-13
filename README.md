@@ -30,7 +30,7 @@ Next the performance of the rainbows is compared to A3C.
 <img src="Lunar_Lander/A3C_Lunar/A3C_vs_the_best.png" width="900"/>
 
 
-We can now show the difference in performance between the dum agent and the smart agent. 
+We can now show the difference in performance between the untrained agent and the trained agent. 
 
 ![](Lunar_Lander/Lander_Gifs/Lunar_Lander_dum.gif)
 ![](Lunar_Lander/Lander_Gifs/Lunar_Lander_4000_new.gif)
